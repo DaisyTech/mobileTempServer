@@ -15,19 +15,8 @@
     host     : 'localhost',
     user     : 'root',
     password : 'wzh369258147',
-    database : 'extranger'
+    database : 'mobileTemp'
   });
-
-  connection.connect();
-
-  connection.query('SELECT * FROM users', function(err, rows, fields) {
-    if (err) throw err;
-
-    console.log('The solution is: ', rows);
-  });
-
-  connection.end();
-
 
   // Configure server
   app.configure( function() {
@@ -50,3 +39,34 @@
     app.use( express.errorHandler({ dumpExceptions: true, showStack: true }));
 
   });
+
+
+
+  // =========================================== APIs ============================================
+
+  connection.connect();
+  app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  });
+
+  // get all the menu categories
+  app.get( '/api/menuCategories', function (req, res, next) {
+    console.log('request from: ' + req.connection.remoteAddress);
+    
+    
+    connection.query('SELECT * FROM MenuCat', function(err, rows, fields) {
+      if (err) throw err;
+      if (rows.length > 0)
+          res.send(rows);
+      else
+          res.send(null);
+    });
+
+  });
+
+
+
+
+
