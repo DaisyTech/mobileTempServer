@@ -18,6 +18,7 @@
     database : 'mobileTemp'
   });
 
+  connection.connect();
   // Configure server
   app.configure( function() {
 
@@ -44,7 +45,6 @@
 
   // =========================================== APIs ============================================
 
-  connection.connect();
   app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
