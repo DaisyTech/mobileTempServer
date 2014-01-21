@@ -55,7 +55,6 @@
   app.get( '/api/menuCategories', function (req, res, next) {
     console.log('request from: ' + req.connection.remoteAddress);
     
-    
     connection.query('SELECT * FROM MenuCat', function(err, rows, fields) {
       if (err) throw err;
       if (rows.length > 0) {
@@ -68,7 +67,21 @@
 
   });
 
+  // get all the menus
+  app.get( '/api/menus', function (req, res, next) {
+    console.log('request from: ' + req.connection.remoteAddress);
+    // var catID = req.params.catID;
+    connection.query("SELECT * FROM Menu WHERE owner_id=1", function(err, rows, fields) {
+      if (err) throw err;
+      if (rows.length > 0) {
+          console.log(JSON.stringify(rows));
+          res.send(rows);
+      }
+      else
+          res.send(null);
+    });
 
+  });
 
 
 
