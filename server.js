@@ -83,5 +83,22 @@
 
   });
 
+  // get all the Ad images
+  app.get( '/api/imageAds', function (req, res, next) {
+    console.log('request from: ' + req.connection.remoteAddress);
+
+    connection.query('SELECT * FROM Image WHERE type=0', function(err, rows, fields) {
+      if (err) throw err;
+      if (rows.length > 0) {
+          console.log(JSON.stringify(rows));
+          res.send(rows);
+      }
+      else
+          res.send(null);
+    });
+
+  });
+
+
 
 
