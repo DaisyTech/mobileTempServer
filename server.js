@@ -87,7 +87,7 @@
   app.get( '/api/imageAds', function (req, res, next) {
     console.log('request from: ' + req.connection.remoteAddress);
 
-    connection.query('SELECT * FROM Image WHERE type=0', function(err, rows, fields) {
+    connection.query('SELECT * FROM Image WHERE (type=0) AND (owner_id=1)', function(err, rows, fields) {
       if (err) throw err;
       if (rows.length > 0) {
           console.log(JSON.stringify(rows));
@@ -99,6 +99,34 @@
 
   });
 
+  // get all the feeds from specific owner
+  app.get( '/api/feeds', function (req, res, next) {
+    console.log('request from: ' + req.connection.remoteAddress);
 
+    connection.query('SELECT * FROM Feed WHERE owner_id=1', function(err, rows, fields) {
+      if (err) throw err;
+      if (rows.length > 0) {
+          console.log(JSON.stringify(rows));
+          res.send(rows);
+      }
+      else
+          res.send(null);
+    });
 
+  });
 
+  // get all the bottom nav items from specific owner
+  app.get( '/api/bottomNavBarItems', function (req, res, next) {
+    console.log('request from: ' + req.connection.remoteAddress);
+
+    connection.query('SELECT * FROM BottomNavBar WHERE owner_id=1', function(err, rows, fields) {
+      if (err) throw err;
+      if (rows.length > 0) {
+          console.log(JSON.stringify(rows));
+          res.send(rows);
+      }
+      else
+          res.send(null);
+    });
+
+  });
